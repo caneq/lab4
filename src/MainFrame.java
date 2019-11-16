@@ -1,8 +1,8 @@
-import java.awt.BorderLayout;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.stream.IntStream;
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
@@ -12,9 +12,12 @@ public class MainFrame extends JFrame {
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
     private JFileChooser fileChooser = new JFileChooser();
+    JMenu graphicsMenu;
     private JCheckBoxMenuItem showAxisMenuItem;
     private JCheckBoxMenuItem showMarkersMenuItem;
     private JCheckBoxMenuItem showRegionsMenuItem;
+    Action rotateLeftGraphicsAction;
+    Action rotateRightGraphicsAction;
     private GraphicsDisplay display = new GraphicsDisplay();
     private boolean fileLoaded = false;
 
@@ -35,7 +38,7 @@ public class MainFrame extends JFrame {
             }
         };
         fileMenu.add(openGraphicsAction);
-        JMenu graphicsMenu = new JMenu("График");
+        graphicsMenu = new JMenu("График");
         menuBar.add(graphicsMenu);
         Action showAxisAction = new AbstractAction("Показывать оси координат") {
             public void actionPerformed(ActionEvent event) {
@@ -70,12 +73,23 @@ public class MainFrame extends JFrame {
         showRegionsMenuItem.setSelected(false);
         graphicsMenu.add(showRegionsMenuItem);
 
-        Action rotateGraphicsAction = new AbstractAction("Повернуть влево на 90") {
+        rotateLeftGraphicsAction = new AbstractAction("Повернуть влево на 90") {
             public void actionPerformed(ActionEvent event) {
                 display.turnLeft();
             }
         };
-        graphicsMenu.add(rotateGraphicsAction);
+        rotateRightGraphicsAction = new AbstractAction("Повернуть вправо на 90") {
+            public void actionPerformed(ActionEvent event) {
+                display.turnRight();
+            }
+        };
+        graphicsMenu.add(rotateLeftGraphicsAction);
+        graphicsMenu.add(rotateRightGraphicsAction);
+
+
+        for(int i = 0; i < graphicsMenu.getItemCount(); i++){
+            graphicsMenu.getItem(i).setEnabled(fileLoaded);
+        }
 
     }
 
@@ -146,9 +160,7 @@ public class MainFrame extends JFrame {
 
     private class GraphicsMenuListener implements MenuListener {
         public void menuSelected(MenuEvent e) {
-            showAxisMenuItem.setEnabled(fileLoaded);
-            showMarkersMenuItem.setEnabled(fileLoaded);
-            showRegionsMenuItem.setEnabled(fileLoaded);
+            IntStream.range(0, graphicsMenu.getItemCount()).forEach(i -> graphicsMenu.getItem(i).setEnabled(fileLoaded));
         }
         public void menuDeselected(MenuEvent e) {
         }
