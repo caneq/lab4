@@ -73,12 +73,12 @@ public class MainFrame extends JFrame {
         showRegionsMenuItem.setSelected(false);
         graphicsMenu.add(showRegionsMenuItem);
 
-        rotateLeftGraphicsAction = new AbstractAction("Повернуть влево на 90") {
+        rotateLeftGraphicsAction = new AbstractAction("Повернуть влево на 90°") {
             public void actionPerformed(ActionEvent event) {
                 display.turnLeft();
             }
         };
-        rotateRightGraphicsAction = new AbstractAction("Повернуть вправо на 90") {
+        rotateRightGraphicsAction = new AbstractAction("Повернуть вправо на 90°") {
             public void actionPerformed(ActionEvent event) {
                 display.turnRight();
             }

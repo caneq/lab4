@@ -228,7 +228,6 @@ public class GraphicsDisplay extends JPanel {
                     (float)  ((labelPos.getY() + maxHeight + Math.signum(maxHeight) * bounds.getHeight())) / 2 );
             canvas.setPaint(Color.BLACK);
             canvas.setColor(Color.BLACK);
-            System.out.println(maxHeight);
         }
 
     }
@@ -247,9 +246,6 @@ public class GraphicsDisplay extends JPanel {
                         /(graphicsData[i - 1][1] - graphicsData[i][1]);
                 regions.add(x);
             }
-        }
-        for (Double i : regions) {
-            System.out.println(i);
         }
     }
 
