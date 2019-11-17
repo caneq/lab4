@@ -234,7 +234,7 @@ public class GraphicsDisplay extends JPanel {
 
 
     protected void findRegions() {
-        System.out.println("findRegs");
+        regions.clear();
         if (graphicsData[0][1] == 0) regions.add(graphicsData[0][0]);
         for (int i = 1; i < graphicsData.length; i++) {
             if (graphicsData[i][1] == 0) {
@@ -324,8 +324,7 @@ public class GraphicsDisplay extends JPanel {
 
     /* Метод-помощник, осуществляющий преобразование координат.
      * Оно необходимо, т.к. верхнему левому углу холста с координатами
-     * (0.0, 0.0) соответствует точка графика с координатами (minX, maxY),
-  где
+     * (0.0, 0.0) соответствует точка графика с координатами (minX, maxY), где
      * minX - это самое "левое" значение X, а
      * maxY - самое "верхнее" значение Y.
      */
