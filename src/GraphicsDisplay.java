@@ -186,7 +186,7 @@ public class GraphicsDisplay extends JPanel {
         canvas.setStroke(markerStroke);
         canvas.setPaint(Color.BLACK);
         canvas.setColor(Color.BLACK);
-
+        calcSquareFirst = 0;
         for (int itReg = 0; itReg < regions.size() - 1; itReg += 1) {
             GeneralPath region = new GeneralPath();
             Point2D.Double point = xyToPoint(regions.get(itReg), 0);
@@ -239,9 +239,8 @@ public class GraphicsDisplay extends JPanel {
         for (int i = 1; i < graphicsData.length; i++) {
             if (graphicsData[i][1] == 0) {
                 regions.add(graphicsData[i][0]);
-                continue;
             }
-            if (graphicsData[i - 1][1] * graphicsData[i][1] < 0) {
+            else if (graphicsData[i - 1][1] * graphicsData[i][1] < 0) {
                 Double x = (graphicsData[i][0] * graphicsData[i - 1][1] - graphicsData[i - 1][0] * graphicsData[i][1])
                         /(graphicsData[i - 1][1] - graphicsData[i][1]);
                 regions.add(x);
@@ -249,15 +248,15 @@ public class GraphicsDisplay extends JPanel {
         }
     }
 
+    int calcSquareFirst = 0;
     protected Double calcSquare(int j){
         Double sq = 0.0;
-        int first = 0;
-        for(; first < graphicsData.length && graphicsData[first][0] < regions.get(j); first++);
-        if (graphicsData[first][1] != 0){
-            sq += graphicsData[first][1]*(graphicsData[first][0] - regions.get(j));
+        for(; calcSquareFirst < graphicsData.length && graphicsData[calcSquareFirst][0] < regions.get(j); calcSquareFirst++);
+        if (graphicsData[calcSquareFirst][1] != 0){
+            sq += graphicsData[calcSquareFirst][1]*(graphicsData[calcSquareFirst][0] - regions.get(j));
         }
         int i;
-        for(i = first + 1; i < graphicsData.length - 1 && graphicsData[i][0] <= regions.get(j + 1); i++) {
+        for(i = calcSquareFirst + 1; i < graphicsData.length - 1 && graphicsData[i][0] <= regions.get(j + 1); i++) {
             sq += (graphicsData[i][1] + graphicsData[i - 1][1])*(graphicsData[i][0] - graphicsData[i - 1][0]);
         }
         i--;
